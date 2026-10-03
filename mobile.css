@@ -1,0 +1,145 @@
+/* =====================================================================
+   mobile.css — shared mobile / tablet fixes for every Mellona Foods page.
+   Linked AFTER each page's inline <style>, so it overrides at equal
+   specificity. Edit mobile behaviour here once instead of in 14 files.
+   ===================================================================== */
+
+/* ---------- 0. Safety net -------------------------------------------- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden;scroll-padding-top:92px}
+body{max-width:100%;overflow-x:hidden}
+img{max-width:100%}
+
+/* ---------- 1. ROOT CAUSE of the "zoomed-out / shifted" page ----------
+   Rows use .g-5 (3rem gutter = -24px side margins) but the .container
+   only had 12px side padding, so every row stuck out 12px on each side.
+   That widened the page (388px on a 375px phone), so mobile browsers
+   zoomed out / allowed sideways drag and the nav & footer looked off.
+   Rows now never use a gutter bigger than the container padding.       */
+@media (max-width:767.98px){
+  .container{--bs-gutter-x:2rem}                         /* 16px side padding */
+  .row.g-5,.row.gx-5{--bs-gutter-x:2rem}                 /* matches container  */
+  .row.g-5,.row.gy-5{--bs-gutter-y:2.25rem}
+}
+/* Tablets: page container is full-width here too, so give it enough
+   padding (24px) to hold the 3rem g-5 row gutters.                      */
+@media (min-width:768px) and (max-width:991.98px){
+  .container{--bs-gutter-x:3rem}
+}
+
+/* ---------- 2. Navigation --------------------------------------------- */
+@media (max-width:991.98px){
+  .site-nav{padding:10px 0}
+  .site-nav.scrolled{padding:8px 0}
+  .nav-wrap{padding:8px 10px 8px 16px}
+  .menu-btn{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;font-size:20px;line-height:1}
+  .brand{font-size:19px;white-space:nowrap}
+  #mobileMenu{--bs-offcanvas-width:min(88vw,360px)}
+  #mobileMenu .offcanvas-header{padding:18px 20px}
+  #mobileMenu .offcanvas-body{padding:6px 14px 28px}
+  #mobileMenu .nav-link{font-size:16px;padding:13px 14px!important;border-radius:12px}
+  #mobileMenu .nav-link.active{background:var(--soft)}
+  #mobileMenu .mob-sub a.active{font-weight:800}
+}
+
+/* ---------- 3. Sections, type, buttons --------------------------------- */
+@media (max-width:767.98px){
+  section{padding:56px 0}
+  .ge-products,.gx-presence,.gx-process,.ab-welcome,.numbers{padding-top:52px;padding-bottom:52px}
+  .cert-section{padding:44px 0}
+  .cta{padding:48px 0}
+  .ab-mv{padding:44px 0}
+  .ge-head{margin-bottom:26px;gap:14px}
+  .ge-head p{max-width:none}
+  .section-lead{font-size:15px}
+  .btn-main,.btn-outline,.btn-lime{padding:13px 22px}
+  .trust-item{justify-content:flex-start;font-size:11px;gap:10px}
+  .trust-item i{font-size:19px;flex:0 0 auto}
+}
+
+/* ---------- 4. Home hero ---------------------------------------------
+   Old rule gave .hero-media height:auto (<=420px) while the photo card
+   was position:absolute, so the hero photo collapsed to nothing.        */
+@media (max-width:767.98px){
+  .hero{padding:118px 0 48px;min-height:0}
+  .hero h1{font-size:clamp(34px,10.2vw,46px);letter-spacing:-.02em}
+  .hero-copy{font-size:16px;line-height:1.65;margin:18px 0 26px}
+  .hero-actions{gap:10px}
+  .hero-actions .btn-main,.hero-actions .btn-outline{display:block;width:100%;text-align:center}
+  .stat-row{gap:18px 22px;flex-wrap:wrap;margin-top:28px}
+  .hero-media{height:auto;margin-top:30px;padding:18px 0 26px}
+  .hero-card{position:relative;inset:auto;height:clamp(250px,74vw,340px);transform:none;border-radius:26px;margin:0}
+  .float-card{padding:12px 14px;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.14)}
+  .float-card.top{top:0;left:10px}
+  .float-card.bottom{position:absolute;bottom:0;right:10px;margin:0;display:block}
+  .float-icon{width:36px;height:36px;border-radius:12px;font-size:17px}
+}
+
+/* ---------- 5. Inner-page banners -------------------------------------- */
+@media (max-width:767.98px){
+  .ab-hero{min-height:300px}
+  .ab-hero .container{padding-top:100px;padding-bottom:30px}
+  .ab-hero .grey{width:100%;clip-path:none;background:rgba(16,37,31,.52);opacity:1}
+  .ab-hero h1{text-shadow:0 2px 14px rgba(0,0,0,.35)}
+}
+
+/* ---------- 6. About: photo collage -----------------------------------
+   Was built from fixed pixel offsets (blocks at left:390px etc.) so it
+   spilled off narrow screens. Re-expressed in percentages of a square
+   box, which reproduces the exact desktop layout at 520px and scales
+   down cleanly on every phone.                                          */
+.ab-collage{width:100%;max-width:520px;height:auto;aspect-ratio:1/1}
+.ab-collage .port{left:0;top:21.15%;width:48.08%;height:63.46%}
+.ab-collage .team{left:25%;top:0;width:65.38%;height:38.46%}
+.ab-collage .blk.gold{left:0;top:65.38%;width:48.08%;height:21.15%}
+.ab-collage .blk.green{left:75%;top:0;width:25%;height:38.46%}
+@media (max-width:991.98px){
+  .ab-collage{margin:0 auto 6px}
+}
+
+/* ---------- 7. Cards / lists ------------------------------------------- */
+@media (max-width:767.98px){
+  .quote-card{padding:28px 22px;border-radius:22px}
+  .quote-text{font-size:16px;min-height:0}
+  .faq-section .accordion-button{font-size:15px;padding:18px;gap:12px}
+  .faq-section .accordion-body{padding:0 18px 20px;font-size:14px}
+  .process-card{padding:22px}
+  .mv-card{gap:16px}
+  .mv-ic{flex-basis:60px;width:60px;height:60px;font-size:28px}
+  .ab-values .val{padding:24px 20px}
+  .cta-box{padding:34px 22px}
+  .cert-card{padding:12px 12px 18px}
+}
+
+/* Long centred paragraphs are hard to read on a phone */
+@media (max-width:575.98px){
+  .ab-block p{text-align:left}
+  .ab-block p{font-size:15px;line-height:1.8}
+}
+
+/* ---------- 8. Forms (stops iOS zooming in on focus) ------------------- */
+@media (max-width:767.98px){
+  input:not([type=checkbox]):not([type=radio]):not([type=submit]),
+  textarea,select,.form-control{font-size:16px!important}
+  .ct-send{width:100%;padding:14px 20px}
+}
+
+/* ---------- 9. Footer & floating buttons --------------------------------- */
+@media (max-width:767.98px){
+  footer{padding:52px 0 22px}
+  .copyright{margin-top:36px}
+  .fab-stack{right:14px;bottom:14px;gap:10px}
+  .fab-wa{width:50px;height:50px;font-size:23px}
+  .fab-top{width:42px;height:42px}
+}
+
+/* ---------- 10. Very small phones (<=360px) --------------------------- */
+@media (max-width:360px){
+  .container{--bs-gutter-x:1.75rem}
+  .row.g-5,.row.gx-5{--bs-gutter-x:1.75rem}
+  .brand{font-size:17px}
+  .hero h1{font-size:32px}
+  .float-card.top{left:4px}
+  .float-card.bottom{right:4px}
+  .stat-row .mini-stat strong{font-size:18px}
+  .hero-actions .btn-main,.hero-actions .btn-outline{padding:13px 16px}
+}
